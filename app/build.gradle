@@ -1,17 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    lintOptions {
-        disable 'MissingTranslation'
-        disable 'ExtraTranslation'
-    }
-
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    namespace "ch.blinkenlights.android.vanilla"
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "ch.blinkenlights.android.vanilla"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
     }
 
     buildTypes {
@@ -22,15 +19,26 @@ android {
         }
     }
 
-    lintOptions {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    lint {
+        disable 'MissingTranslation', 'ExtraTranslation'
         abortOnError false
     }
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
-    implementation 'androidx.media:media:1.6.0'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'junit:junit:4.12'
-    compileOnly 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.media:media:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    compileOnly 'androidx.annotation:annotation:1.8.2'
+    testImplementation 'junit:junit:4.13.2'
 }
